@@ -1,4 +1,4 @@
-package controllers
+package models
 
 type Task struct {
     ID          uint   `gorm:"primaryKey" json:"id"`

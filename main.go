@@ -1,7 +1,8 @@
 package main
 
 import (
-    "task-api/controllers"
+    "Task-Management-API-with-Go/models"
+    "Task-Management-API-with-Go/controllers"
     "log"
     "net/http"
     "github.com/gorilla/mux"
@@ -12,6 +13,7 @@ import (
 var DB *gorm.DB
 
 func main() {
+
     var err error
 
     DB, err = gorm.Open(sqlite.Open("tasks.db"), &gorm.Config{})
@@ -19,7 +21,8 @@ func main() {
         log.Fatal("Failed to connect to database")
     }
 
-    DB.AutoMigrate(&controllers.Task{})
+    controllers.InitDB(DB)
+    DB.AutoMigrate(&models.Task{})
     r := mux.NewRouter()
 
     r.HandleFunc("/tasks", controllers.GetTasks).Methods("GET")
